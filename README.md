@@ -1,8 +1,12 @@
 # PySpark (Batch) Test
-1. Descargar uno o más archivos grandes (el más grande de mínimo 20MB, independiente del número de registros y columnas). El que usted prefiera, hay muchas fuentes:
-    a. https://www.imdb.com/interfaces/
-    b. https://www.kaggle.com/
-    c. https://www.datos.gov.co/
-    d. Sitios con “Open Data” (Buscar en Google)
+2. Document a **shopping cart API spec** in a Google spreadsheet. Specify every possible scenario in each defined endpoint 
+with their corresponding response status and bodies. This API should at least contain the following functionality:
+    1. Purchase of an Item
+    2. Item description (name, price, supplier, etc)
+    3. Item update
+    4. Item deletion
+    5. Cart items list
+    6. Cart checkout
+    7. Cart cancellation
     
 
