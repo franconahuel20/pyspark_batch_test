@@ -34,19 +34,23 @@ MUY IMPORTANTE: Explicar la operación u operaciones (ver abajo el punto 2 en la
 3. Fotos (imágenes) de evidencias de resultados: el resultado de un .show() o una foto de los datos generados (descargados como CSV y cargados a Excel) donde se vean los cambios que hace el programa. 
 
 Script para habilitar Spark en Google Colab:
-    ```
-    !apt-get update 
-    !apt-get install openjdk-8-jdk-headless -qq > /dev/null 
-    !wget -q http://archive.apache.org/dist/spark/spark-2.3.1/spark-2.3.1-bin-hadoop2.7.tgz !tar xf spark-2.3.1-bin-hadoop2.7.tgz 
-    !pip install -q findspark 
-    import os 
-    os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-8-openjdk-amd64" os.environ["SPARK_HOME"] = "/content/spark-2.3.1-bin-hadoop2.7" 
-    !ls 
-    import findspark 
-    findspark.init() 
-    import pyspark 
-    from pyspark.sql import SparkSession
-    spark = SparkSession.builder.getOrCreate() 
-    spark 
-    ```
+```
+val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM")
+
+def getEventCountOnWeekdaysPerMonth(data: RDD[(LocalDateTime, Long)]): Array[(String, Long)] = {
+
+ val result = data
+   .filter(e => e._1.getDayOfWeek.getValue < DayOfWeek.SATURDAY.getValue)
+   .map(mapDateTime2Date)
+   .reduceByKey(_ + _)
+   .collect()
+
+ result
+   .map(e => (e._1.format(formatter), e._2))
+}
+
+private def mapDateTime2Date(v: (LocalDateTime, Long)): (LocalDate, Long) = {
+ (v._1.toLocalDate.withDayOfMonth(1), v._2)
+}
+```
 
